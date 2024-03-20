@@ -4,9 +4,16 @@
 {% block title %}{{ post.title }} - {{ super() }}{% endblock %}
 
 {% block content %}
-    <article>
-        <h2>{{ post.title }}</h2>
-        <p>{{ post.content }}</p>
-        <p>By {{ post.author }} on {{ post.date_posted }}</p>
+    <article class="post-container">
+        <div class="post-image">
+            <img src="{{ url_for('static', filename='uploads/' + post.title + '.jpg') }}" alt="Example Image">
+        </div>
+        <div class="post-text">
+            <h2>{{ post.title }}</h2>
+            <div class="post-content">
+                {{ post.content | safe }}
+            </div>
+            <p>By {{ post.author }} on {{ post.date_posted }}</p>
+        </div>
     </article>
 {% endblock %}

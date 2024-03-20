@@ -6,7 +6,7 @@ body {
 }
 
 header {
-    background-color: #333;
+    background-color: cadetblue;
     color: #fff;
     padding: 20px;
 }
@@ -19,6 +19,10 @@ nav ul {
 nav ul li {
     display: inline;
     margin-right: 20px;
+}
+
+nav ul li a {
+    color: #fff;
 }
 
 footer {
@@ -43,3 +47,65 @@ article {
 form {
     margin-top: 20px;
 }
+/* Add your custom CSS styles here */
+.container {
+    max-width: 600px;
+    margin: 0 auto;
+}
+
+.form-group {
+    margin-bottom: 20px;
+}
+
+label {
+    font-weight: bold;
+}
+
+.form-control {
+    width: 100%;
+    padding: 8px;
+    font-size: 16px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+}
+
+textarea.form-control {
+    height: auto;
+}
+
+.btn-primary {
+    background-color: #007bff;
+    color: #fff;
+    border: none;
+    padding: 10px 20px;
+    border-radius: 4px;
+    cursor: pointer;
+}
+
+.btn-primary:hover {
+    background-color: #0056b3;
+}
+/* Add your custom CSS styles here */
+.post-container {
+    display: flex;
+    flex-direction: row;
+    align-items: flex-start;
+    margin-bottom: 20px;
+}
+
+.post-image img {
+    max-width: 300px; /* Adjust the max-width as needed */
+    height: auto;
+    margin-right: 20px; /* Adjust the spacing between image and text */
+}
+
+.post-text {
+    flex-grow: 1;
+}
+
+.post-content {
+    font-size: 16px; /* Adjust font size as needed */
+    line-height: 1.6; /* Adjust line height for better readability */
+    color: #333; /* Adjust text color as needed */
+}
+

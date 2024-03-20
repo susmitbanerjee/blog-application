@@ -2,9 +2,20 @@ from flask import Flask, render_template, request, redirect, url_for, flash
 from datetime import datetime
 import secrets
 import string
+from werkzeug.utils import secure_filename
+import os
+UPLOAD_FOLDER = 'static/uploads'
+ALLOWED_EXTENSIONS = {'png', 'jpg', 'jpeg', 'gif'}
+
+if not os.path.exists(UPLOAD_FOLDER):
+    os.makedirs(UPLOAD_FOLDER)
 
 app = Flask(__name__)
+app.config['UPLOAD_FOLDER'] = UPLOAD_FOLDER
 
+def allowed_file(filename):
+    return '.' in filename and \
+           filename.rsplit('.', 1)[1].lower() in ALLOWED_EXTENSIONS
 
 def generate_secret_key(length=32):
     """Generate a random secret key."""
@@ -18,8 +29,9 @@ app.secret_key = random_secret_key
 
 
 class BlogPost:
-    def __init__(self, title, content, author, date_posted):
+    def __init__(self, title, image, content, author, date_posted):
         self.title = title
+        self.img = image
         self.content = content
         self.author = author
         self.date_posted = date_posted
@@ -40,7 +52,23 @@ def add_post():
         content = request.form['content']
         author = request.form['author']
         date_posted = datetime.now()
-        new_post = BlogPost(title, content, author, date_posted)
+        if 'image' not in request.files:
+            flash('No file part', 'error')
+            return redirect(request.url)
+
+        file = request.files['image']
+        if file.filename == '':
+            flash('No selected file', 'error')
+            return redirect(request.url)
+        if file and allowed_file(file.filename):
+            filename = secure_filename(file.filename)
+            file.save(os.path.join(app.config['UPLOAD_FOLDER'], title+'.jpg'))
+            img_url = os.path.join(app.config['UPLOAD_FOLDER'], title+'.jpg')
+        else:
+            flash('Invalid file type', 'error')
+            return redirect(request.url)
+
+        new_post = BlogPost(title, file, content, author, date_posted)
         blog_posts.append(new_post)
         flash('Post created successfully!', 'success')
         return redirect(url_for('home'))
@@ -64,9 +92,9 @@ def delete_post(index):
 
 
 # Break down larger functions into smaller ones
-def create_post(title, content, author):
+def create_post(title, img, content, author):
     date_posted = datetime.now()
-    new_post = BlogPost(title, content, author, date_posted)
+    new_post = BlogPost(title, img, content, author, date_posted)
     blog_posts.append(new_post)
 
 

@@ -4,14 +4,26 @@
 {% block title %}Add Post - {{ super() }}{% endblock %}
 
 {% block content %}
-    <h2>Add New Post</h2>
-    <form action="{{ url_for('add_post') }}" method="post">
-        <label for="title">Title:</label><br>
-        <input type="text" id="title" name="title"><br>
-        <label for="content">Content:</label><br>
-        <textarea id="content" name="content"></textarea><br>
-        <label for="author">Author:</label><br>
-        <input type="text" id="author" name="author"><br>
-        <input type="submit" value="Submit">
-    </form>
+    <div class="container">
+        <h2>Add New Post</h2>
+        <form action="{{ url_for('add_post') }}" method="post" class="post-form" enctype="multipart/form-data">
+            <div class="form-group">
+                <label for="title">Title:</label>
+                <input type="text" id="title" name="title" class="form-control" required>
+            </div>
+            <div class="form-group">
+                <label for="content">Content:</label>
+                <textarea id="content" name="content" class="form-control" rows="8"></textarea>
+            </div>
+            <div class="form-group">
+                <label for="author">Author:</label>
+                <input type="text" id="author" name="author" class="form-control" required>
+            </div>
+            <div class="form-group">
+                <label for="image">Attach Image:</label>
+                <input type="file" id="image" name="image" accept="image/*" class="form-control-file">
+            </div>
+            <button type="submit" class="btn btn-primary">Submit</button>
+        </form>
+    </div>
 {% endblock %}
